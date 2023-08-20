@@ -1,0 +1,296 @@
+openapi: 3.0.0
+info:
+  title: Jobs mysql
+  contact: {}
+  version: '1.0'
+servers:
+  - url: http://localhost:5000/api/v1
+    variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register
+      operationId: Register
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/RegisterRequest'
+                - example:
+                    name: hosein
+                    email: hosein@gmail.com
+                    password: '0926979493'
+            example:
+              name: hosein
+              email: hosein@gmail.com
+              password: '0926979493'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/update-user:
+    patch:
+      tags:
+        - Auth
+      summary: Update User
+      operationId: UpdateUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/UpdateUserRequest'
+                - example:
+                    name: kourosh
+                    email: kourosh@gmail.com
+            example:
+              name: kourosh
+              email: kourosh@gmail.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Log-In
+      operationId: Log-In
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Log-In-Request'
+                - example:
+                    email: kourosh@gmail.com
+                    password: '12345678'
+            example:
+              email: kourosh@gmail.com
+              password: '12345678'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/update-password:
+    patch:
+      tags:
+        - Auth
+      summary: Update Password
+      operationId: UpdatePassword
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/UpdatePasswordRequest'
+                - example:
+                    password: '12345678'
+            example:
+              password: '12345678'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /job:
+    post:
+      tags:
+        - Job
+      summary: Create Job
+      operationId: CreateJob
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/CreateJobRequest'
+                - example:
+                    company: apple
+                    position: in kiri tar
+            example:
+              company: apple
+              position: in kiri tar
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+        - Job
+      summary: Get All Jobs
+      operationId: GetAllJobs
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /job/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The job ID
+    get:
+      tags:
+        - Job
+      summary: Get Single Job
+      operationId: GetSingleJob
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    patch:
+      tags:
+        - Job
+      summary: Update Job
+      operationId: UpdateJob
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/UpdateJobRequest'
+                - example:
+                    company: google
+            example:
+              company: google
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Job
+      summary: Delete Job
+      operationId: DeleteJob
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: hosein
+        email: hosein@gmail.com
+        password: '0926979493'
+    UpdateUserRequest:
+      title: UpdateUserRequest
+      required:
+        - name
+        - email
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+      example:
+        name: kourosh
+        email: kourosh@gmail.com
+    Log-In-Request:
+      title: Log-In-Request
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: kourosh@gmail.com
+        password: '12345678'
+    UpdatePasswordRequest:
+      title: UpdatePasswordRequest
+      required:
+        - password
+      type: object
+      properties:
+        password:
+          type: string
+      example:
+        password: '12345678'
+    CreateJobRequest:
+      title: CreateJobRequest
+      required:
+        - company
+        - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: apple
+        position: in kiri tar
+    UpdateJobRequest:
+      title: UpdateJobRequest
+      required:
+        - company
+      type: object
+      properties:
+        company:
+          type: string
+      example:
+        company: google
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+  - httpBearer: []
+tags:
+  - name: Auth
+  - name: Job

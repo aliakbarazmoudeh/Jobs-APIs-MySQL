@@ -7,9 +7,9 @@ const connectDB = require('./db/connectDB');
 const port = process.PORT || 5000;
 
 // swagger
-// const swaggerUI = require('swagger-ui-express');
-// const YAML = require('yamljs');
-// const swaggerDocument = YAML.load('./swagger.yaml');
+const swaggerUI = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
 
 // rest packages
 const cookieParser = require('cookie-parser');
@@ -38,8 +38,9 @@ app.use(cookieParser(process.env.JWT_SECRET));
 const authRouter = require('./routes/authRoutes');
 const jobRouter = require('./routes/jobRoutes');
 app.get('/', (req, res) => {
-  res.send('hello there');
+  res.redirect('/api-docs');
 });
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/job', jobRouter);
 
